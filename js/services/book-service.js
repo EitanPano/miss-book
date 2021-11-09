@@ -2,13 +2,16 @@ import { utilService } from './util-service.js';
 import { storageService } from './async-storage-service.js';
 
 const BOOKS_KEY = 'books';
+const GOOGLE_BOOKS_KEY = 'google_books';
 _createBooks();
 
 export const bookService = {
     query,
     getById,
     addReview,
-    removeReview
+    removeReview,
+    searchBook,
+    addGoogleBook,
 };
 
 function query() {
@@ -17,6 +20,44 @@ function query() {
 
 function getById(bookId) {
     return storageService.get(BOOKS_KEY, bookId);
+}
+
+function searchBook(bookTitle) {
+    const googleBooks = utilService.loadFromStorage(GOOGLE_BOOKS_KEY) || {};
+    if (googleBooks[bookTitle]) {
+        console.log('Loaded from storage');
+        return Promise.resolve(googleBooks[bookTitle]);
+    }
+    return axios
+        .get(
+            `https://www.googleapis.com/books/v1/volumes?printType=books&q=${bookTitle}`
+        )
+        .then((res) => {
+            googleBooks[bookTitle] = res.data.items;
+            utilService.saveToStorage(GOOGLE_BOOKS_KEY, googleBooks);
+            return res.data.items;
+        });
+}
+
+function addGoogleBook(googleBook) {
+    console.log(googleBook);
+    const book = {
+        title: googleBook.volumeInfo.title,
+        subtitle: (googleBook.volumeInfo.subtitle) ? googleBook.volumeInfo.subtitle : 'interdum per habitasse luctus purus est',
+        authors: (googleBook.volumeInfo.authors) ? googleBook.volumeInfo.authors : '',
+        publishedDate: (googleBook.volumeInfo.publishedDate) ? googleBook.volumeInfo.publishedDate : '',
+        description: (googleBook.volumeInfo.description) ? googleBook.volumeInfo.description : '',
+        pageCount: (googleBook.volumeInfo.pageCount) ? googleBook.volumeInfo.pageCount : '',
+        categories: (googleBook.volumeInfo.categories) ? googleBook.volumeInfo.categories : '',
+        thumbnail: (googleBook.volumeInfo.imageLinks.thumbnail) ? googleBook.volumeInfo.imageLinks.thumbnail : '',
+        language: (googleBook.volumeInfo.language) ? googleBook.volumeInfo.language : '',
+        listPrice: {
+            amount: utilService.getRandomInt(30, 100),
+            currencyCode: 'USD',
+            isOnSale: false,
+        },
+    };
+    return storageService.post(BOOKS_KEY, book);
 }
 
 function addReview(bookId, review) {
@@ -31,10 +72,10 @@ function addReview(bookId, review) {
 
 function removeReview(bookId, reviewId) {
     return getById(bookId).then((book) => {
-        const idx = book.reviews.findIndex(review => review.id === reviewId)
+        const idx = book.reviews.findIndex((review) => review.id === reviewId);
         book.reviews.splice(idx, 1);
         return storageService.put(BOOKS_KEY, book);
-    })
+    });
 }
 
 function _createBooks() {

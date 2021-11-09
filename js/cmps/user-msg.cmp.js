@@ -7,7 +7,7 @@ export default {
             <p>{{showSign}}</p>
             <p>{{msg.type}}</p>
             <p>{{msg.txt}}</p>
-            <router-link :to="msg.link">Check it Out</router-link>
+            <router-link v-if="msg.link" :to="msg.link">Check it Out</router-link>
         </div>
     </transition>
     `,

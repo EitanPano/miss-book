@@ -12,7 +12,6 @@ export default {
         reviewList,
         reviewAdd,
         longText,
-
     },
     template: `
     <section v-if="book" class="book-details app-main">
@@ -63,13 +62,20 @@ export default {
             bookService.addReview(this.book.id, review).then((book) => {
                 const msg = {
                     txt: 'Book ' + this.book.title + ' was successfully added',
-                    link: '/book/:' + this.book.id,
+                    link: '/book/' + this.book.id,
                     type: 'success',
                 };
                 eventBus.$emit('showMsg', msg);
                 this.book = book;
                 this.$router.push({ path: `/book` });
-            });
+            })
+            .catch(err => {
+                const msg = {
+                    txt: 'Something went wrong, Please try again later',
+                    type: 'error',
+                };
+                eventBus.$emit('showMsg', msg);
+            })
         },
         deleteReview(review) {
             bookService.removeReview(this.book.id, review.id).then((book) => {
