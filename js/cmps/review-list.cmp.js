@@ -1,15 +1,17 @@
+import reviewPreview from './review-preview.cmp.js'
+
 export default {
     props: ['reviews'],
+    components: {
+        reviewPreview
+    },
     template: `
-    <section>
+    <section class="review-list">
+        <h2>Readers Reviews</h2>
         <ul>
-            <li v-for="review in reviews" :key="review.id">
-                <p>{{ review.name }}</p>
-                <p>{{ review.rating }}</p>
-                <p v-if="review.txt">{{ review.txt }}</p>
-                <p>{{ review.date }}</p>
-                <button @click="remove(review)">x</button>
-            </li>
+            <template v-for="review in reviews">
+                <review-preview @removed="remove" :key="review.id":review="review" />
+            </template>
         </ul>
     </section>
     `,
@@ -17,5 +19,5 @@ export default {
         remove(review) {
             this.$emit('removed', review)
         }
-    }
+    },
 }

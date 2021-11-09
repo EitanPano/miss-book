@@ -10,7 +10,7 @@ export default {
         <star-system @rated="setRating"/>
         <label class="input-container" for=""><input v-model="review.name" type="text" placeholder="Reader's name"></label>
         <label class="input-container" for="">Read at: <input v-model="review.date" type="date"></label>
-        <textarea v-model="review.text" rows="4" cols="50" placeholder="Enter your revew right here...">
+        <textarea v-model="review.text" rows="4" cols="50" placeholder="Enter your revew right here..." maxlength="220">
         </textarea>
         <button @click.prevent="addReview">Submit</button>
     </form>

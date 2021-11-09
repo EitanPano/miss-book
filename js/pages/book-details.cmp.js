@@ -16,12 +16,12 @@ export default {
     template: `
     <section v-if="book" class="book-details app-main">
         <main class="main-container">
-            <router-link class="back-to" to="/book">Back to Books</router-link>
-
-            <router-link :to="'/book/'+prevBookId">Prev Book ></router-link>
-            <img-frame :book="book"/>
-            <router-link :to="'/book/'+nextBookId">Next Book ></router-link>
-
+            <router-link class="back-to" to="/book"><< Back</router-link>
+            <div class="main-frame flex">
+                <router-link :to="'/book/'+prevBookId"><</router-link>
+                <img-frame :book="book"/>
+                <router-link :to="'/book/'+nextBookId">></router-link>
+            </div>
             <div class="initial-details">
                 <p>{{ titleToShow }}</p>
                 <p>By {{ book.authors }}</p>

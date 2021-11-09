@@ -4,7 +4,7 @@ export default {
         <h1><a class="logo" href="">MissBook</a></h1>
         <nav>
             <ul class="main-nav" :class="menuOpen" @click="toggleMenu">
-                <li><router-link to="/">Home</router-link></li>
+                <li><router-link to="/" exact>Home</router-link></li>
                 <li><router-link to="/book">Books</router-link></li>
                 <li><router-link to="/about">About</router-link></li>
             </ul>

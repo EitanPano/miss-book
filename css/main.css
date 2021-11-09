@@ -32,7 +32,7 @@ ul {
     list-style: none;
 }
 
-input{
+input {
     font-size: 1em;
     padding: 0.2em;
     margin: 0.5em;
@@ -139,6 +139,12 @@ ul.menu-open.main-nav {
     box-shadow: inset 0 -5px 0 0 rgb(0, 120, 190);
 }
 
+/* active links */
+.router-link-active {
+    color: rgb(0, 120, 190);
+    box-shadow: inset 0 -5px 0 0 rgb(0, 120, 190);
+}
+
 /* Burger Menu */
 .burger-menu {
     width: 2.5em;
@@ -235,6 +241,11 @@ ul.menu-open.main-nav {
         color: white;
         box-shadow: inset 0 -5px 0 0 white;
     }
+    /* active links */
+    .router-link-active {
+        color: white;
+        box-shadow: inset 0 -5px 0 0 white;
+    }
     .burger-menu {
         display: none;
     }
@@ -270,7 +281,7 @@ ul.menu-open.main-nav {
     max-width: 220px;
     padding: 0.5em;
     border-radius: 0.3em;
-    
+
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.35);
     cursor: pointer;
     transition: 0.3s;
@@ -311,32 +322,67 @@ ul.menu-open.main-nav {
     margin: 10vh auto 0;
 }
 
+.book-details .main-container a:first-child {
+    font-weight: bold;
+    color: inherit;
+    box-shadow: none;
+}
+
+.book-details .main-container a:first-child:hover {
+    text-decoration: underline;
+}
+
+.book-details .main-frame {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-details .main-frame a {
+    /* position: absolute; */
+    font-weight: bold;
+    font-size: 5em;
+    /* position: relative; */
+    align-items: center;
+    line-height: 5rem;
+    height: 5rem;
+    padding: 0 1.5rem;
+    /* margin: 0 2rem; */
+}
+
 .book-details .img-frame {
     box-shadow: 3px 5px 20px 0 rgba(0, 0, 0, 0.4);
 }
 
 .book-details .main-container {
     display: flex;
+    justify-content: center;
     flex-direction: row;
+    max-width: 1024px;
+    position: relative;
 }
 
 .book-details .back-to {
     line-height: 2em;
     height: 2em;
-    width: 33%;
     text-align: right;
     padding-right: 1em;
+    margin: 0 auto;
+    position: absolute;
+    left: 2em;
 }
 
 .book-details .initial-details {
+    position: absolute;
+    right: 0.5em;
     font-weight: bold;
-    display: block;
-    width: 33%;
+    margin: 0 auto;
+
 }
 
 .book-details .img-frame {
     width: 18em;
     height: 22em;
+    margin: auto;
 }
 
 /* Long Text */
@@ -368,14 +414,54 @@ ul.menu-open.main-nav {
     background-color: rgb(255, 229, 157);
     border: 5px solid rgba(55, 55, 55, 0.25);
     border-radius: 0.5em;
-    margin: auto;
+    margin: 1em auto;
     padding: 1em;
+}
+
+/* Review list */
+
+.review-list {
+    margin: 1em 0;
+}
+
+.review-list li {
+    position: relative;
+    background-color: rgb(240, 240, 240);
+    height: 100px;
+    margin: 1em auto;
+    border-radius: 0.3em;
+    box-shadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.review-list .review-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em 0.5em 1em;
+    border-right: 2px solid rgb(100, 180, 255);
+    line-height: 0;
+    font-weight: bold;
+}
+
+.review-list .review-text {
+    padding: 0 2.5em 0 2em;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+}
+
+.review-preview button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0.3em;
 }
 
 /* Review add */
 
 .review-add {
-    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -385,15 +471,12 @@ ul.menu-open.main-nav {
 
 .review-add .input-container {
     margin: 1em 0 0;
-
 }
 
 .review-add .input-container:nth-child(4) {
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
-    /* justify-content: space-between; */
-    /* align-items: center; */
 }
 
 .review-add h2 {
@@ -401,21 +484,24 @@ ul.menu-open.main-nav {
 }
 
 .review-add textarea {
+    box-sizing: border-box;
     resize: none;
-    height: 15em;
+    height: 14em;
     font-size: 1em;
     border-radius: 0.3em;
-    padding: 0.5em;
+    padding: 1em 1.5em;
     border: 0;
     outline: 0;
+    width: 80%;
+    min-width: 310px;
     box-shadow: 0 0 0 3px rgba(55, 55, 55, 0.25);
 
     transition: all 0.3s;
- }
+}
 
- .review-add textarea:focus {
-    box-shadow: 0 0 0 3px rgb(100, 180, 255)
- }
+.review-add textarea:focus {
+    box-shadow: 0 0 0 3px rgb(100, 180, 255);
+}
 
 .review-add button {
     margin-top: 1em;
@@ -424,7 +510,6 @@ ul.menu-open.main-nav {
     font-size: 1em;
     font-weight: bold;
 }
-
 
 /* Star Rating System */
 
@@ -476,7 +561,6 @@ ul.menu-open.main-nav {
 }
 
 .star-system label .icon {
-    /* float: left; */
     color: transparent;
 }
 
@@ -513,18 +597,33 @@ ul.menu-open.main-nav {
 
 /* animations */
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to
-    {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 
-
-
 /* helpers */
+
+/* text */
+
+.text-left {
+    text-align: left;
+}
+
+/* flex */
+
+.flex {
+    display: flex;
+}
+
+.space-between {
+    justify-content: space-between;
+}
 
 .cheap {
     color: red;
