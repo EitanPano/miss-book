@@ -8,6 +8,8 @@ _createBooks();
 export const bookService = {
     query,
     getById,
+    getNextBookId,
+    getPrevBookId,
     addReview,
     removeReview,
     searchBook,
@@ -20,6 +22,22 @@ function query() {
 
 function getById(bookId) {
     return storageService.get(BOOKS_KEY, bookId);
+}
+
+function getNextBookId(bookId) {
+    return query()
+        .then(books => {
+            const idx = books.findIndex(book => book.id === bookId);
+            return (idx === books.length - 1) ? books[0].id : books[idx + 1].id;
+        });
+}
+
+function getPrevBookId(bookId) {
+    return query()
+        .then(books => {
+            const idx = books.findIndex(book => book.id === bookId);
+            return (idx === 0) ? books[books.length - 1].id : books[idx - 1].id;
+        });
 }
 
 function searchBook(bookTitle) {

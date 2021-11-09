@@ -17,7 +17,11 @@ export default {
     <section v-if="book" class="book-details app-main">
         <main class="main-container">
             <router-link class="back-to" to="/book">Back to Books</router-link>
+
+            <router-link :to="'/book/'+prevBookId">Prev Book ></router-link>
             <img-frame :book="book"/>
+            <router-link :to="'/book/'+nextBookId">Next Book ></router-link>
+
             <div class="initial-details">
                 <p>{{ titleToShow }}</p>
                 <p>By {{ book.authors }}</p>
@@ -54,6 +58,8 @@ export default {
     data() {
         return {
             book: null,
+            prevBookId: null,
+            nextBookId: null,
             bookReview: null,
         };
     },
@@ -88,10 +94,26 @@ export default {
             });
         },
     },
+    watch: {
+        '$route.params.bookId': {
+            handler() {
+                const { bookId } = this.$route.params;
+                bookService.getById(bookId)
+                    .then(book => this.book = book);
+                bookService.getNextBookId(bookId)
+                    .then(bookId => this.nextBookId = bookId);
+                bookService.getPrevBookId(bookId)
+                    .then(bookId => this.prevBookId = bookId);
+            },
+            immediate: true
+        }
+    },
+
     created() {
         const { bookId } = this.$route.params;
         bookService.getById(bookId).then((book) => (this.book = book));
     },
+
     computed: {
         titleToShow() {
             return this.book.title.replace(/(?:^|\s)\S/g, (a) => { return a.toUpperCase()});
